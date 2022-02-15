@@ -73,6 +73,9 @@ GEM
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
+    aws-sdk-ec2 (1.298.0)
+      aws-sdk-core (~> 3, >= 3.126.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.54.0)
       aws-sdk-core (~> 3, >= 3.126.0)
       aws-sigv4 (~> 1.1)
@@ -227,6 +230,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aws-sdk-ec2 (~> 1)
   aws-sdk-s3 (~> 1.112)
   bootsnap
   cancancan (~> 3.3)
