@@ -16,6 +16,7 @@ gem 'aws-sdk-s3', '~> 1.112'
 gem 'aws-sdk-ec2', '~> 1'
 gem 'cancancan', '~> 3.3'
 gem 'omniauth-auth0', '~> 3.0'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
