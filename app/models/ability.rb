@@ -6,7 +6,6 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
     can :manage, :all, user_id: user.id
-    can :read, :all
 
 
     # The first argument to `can` is the action you are giving the user
