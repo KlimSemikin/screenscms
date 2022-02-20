@@ -1,6 +1,6 @@
 module Api
   module V1
-    class EventsController < ApplicationController
+    class EventsController < PrivateController
       load_and_authorize_resource :except => [:create]
 
       def index
