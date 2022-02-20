@@ -1,6 +1,7 @@
 module Api
   module V1
     class ScreensController < PrivateController
+      load_and_authorize_resource
       def index
       end
 
