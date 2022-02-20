@@ -1,7 +1,7 @@
 module Api
   module V1
-    class EventsController < PrivateController
-      load_and_authorize_resource
+    class EventsController < ApplicationController
+      load_and_authorize_resource :except => [:create]
 
       def index
         @events = Event.accessible_by(current_ability, :read)
@@ -14,7 +14,9 @@ module Api
       end
 
       def create
-        @event = current_user.events.new(event_params)
+        @event = current_user.events.new(
+          name: event_params[:event][:name]
+        )
         if @event.save
           render json: @event, each_serializer: EventSerializer, status: :ok
         else
@@ -24,7 +26,9 @@ module Api
 
       def update
         @event = Event.accessible_by(current_ability, :update).find(params[:id])
-        if @event.update(event_params)
+        if @event.update(
+          name: event_params[:event][:name]
+        )
           render json: @event, each_serializer: EventSerializer, status: :ok
         else
           render json: { error: @event.errors }, status: :unprocessable_entity
@@ -43,7 +47,7 @@ module Api
       private
 
       def event_params
-        params.permit(:name)
+        params.permit(:id, event: [:name])
       end
     end
   end
