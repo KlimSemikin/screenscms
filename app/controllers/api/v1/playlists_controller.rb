@@ -32,6 +32,7 @@ module Api
 
       def destroy
         if @playlist.destroy
+          @playlist.create_playlist(name: "playlist")
           render json: @playlist, each_serializer: PlaylistSerializer, status: :ok
         else
           render json: { error: @playlist.errors }, status: :unprocessable_entity
