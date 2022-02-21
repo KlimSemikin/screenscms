@@ -5,7 +5,15 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    can :manage, :all, user_id: user.id
+    # can :manage, :all, user_id: user.id
+    can :manage, Event, user_id: user.id
+    can :manage, Screen, event: { user_id: user.id }
+    can :manage, Playlist, screen: { event: { user_id: user.id } }
+    can :manage, Content, playlists: { screen: { event: { user_id: user.id } } }
+
+    # can :manage, Project, user_id: user.id
+    # can :manage, Task, project: { user_id: user.id }
+    # can :manage, Comment, task: { project: { user_id: user.id } }
 
 
     # The first argument to `can` is the action you are giving the user
