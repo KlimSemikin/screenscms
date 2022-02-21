@@ -2,9 +2,9 @@ module Api
   module V1
     class ContentsController < PrivateController
       load_and_authorize_resource :event
-      load_resource :screen, through: :event, :except => [:create]
-      load_resource :playlist, through: :screen, singleton: true, :except => [:create]
-      load_resource :content, through: :playlist, :except => [:create]
+      load_and_authorize_resource :screen, through: :event
+      load_and_authorize_resource :playlist, through: :screen, singleton: true
+      load_resource through: :playlist
 
       def index
         @contents = @playlist.contents
@@ -16,11 +16,9 @@ module Api
       end
 
       def create
-        @content = Content.find_or_create_by(content: content_params[:content][:content])
-        if @content
-          unless @event.screens.find(content_params[:screen_id]).playlist.contents.exists?(@content.id)
-            @event.screens.find(content_params[:screen_id]).playlist.contents << @content
-          end
+        @content = @event.contents.find_by(content_params) || Content.create(content_params)
+        if @content.valid?
+          @playlist.contents << @content
           render json: @content, each_serializer: ContentSerializer, status: :ok
         else
           render json: { error: @content.errors }, status: :unprocessable_entity
@@ -28,7 +26,7 @@ module Api
       end
 
       def update
-        if @content.update(content_params[:content])
+        if @content.update(content_params)
           render json: @content, each_serializer: ContentSerializer, status: :ok
         else
           render json: { error: @content.errors }, status: :unprocessable_entity
@@ -36,7 +34,7 @@ module Api
       end
 
       def destroy
-        if @content.destroy
+        if @playlist.contents.delete(@content)
           render json: @content, each_serializer: ContentSerializer, status: :ok
         else
           render json: { error: @content.errors }, status: :unprocessable_entity
@@ -46,8 +44,7 @@ module Api
       private
 
       def content_params
-        params.require(:content)
-        params.permit(:id, :event_id, :screen_id, content: [:content])
+        params.require(:content).permit(:content)
       end
     end
   end

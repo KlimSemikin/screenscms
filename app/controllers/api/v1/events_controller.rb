@@ -1,7 +1,7 @@
 module Api
   module V1
     class EventsController < PrivateController
-      load_and_authorize_resource :except => [:create]
+      load_and_authorize_resource
 
       def index
         render json: @events, each_serializer: EventSerializer, status: :ok
@@ -12,9 +12,6 @@ module Api
       end
 
       def create
-        @event = current_user.events.new(
-          name: event_params[:event][:name]
-        )
         if @event.save
           render json: @event, each_serializer: EventSerializer, status: :ok
         else
@@ -23,9 +20,7 @@ module Api
       end
 
       def update
-        if @event.update(
-          name: event_params[:event][:name]
-        )
+        if @event.update(event_params)
           render json: @event, each_serializer: EventSerializer, status: :ok
         else
           render json: { error: @event.errors }, status: :unprocessable_entity
@@ -43,8 +38,7 @@ module Api
       private
 
       def event_params
-        params.require(:event)
-        params.permit(:id, event: [:name])
+        params.require(:event).permit(:name)
       end
     end
   end
