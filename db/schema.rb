@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_17_154747) do
 
   create_table "playlists", force: :cascade do |t|
     t.bigint "screen_id", null: false
-    t.string "name"
+    t.string "name", default: "playlist"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "duration", default: 3600
