@@ -14,9 +14,7 @@ module Api
       end
 
       def create
-        @screen = @event.screens.new(
-          name: screen_params[:screen][:name]
-        )
+        @screen = @event.screens.new(screen_params[:screen])
         if @screen.save
           render json: @screen, each_serializer: ScreenSerializer, status: :ok
         else
@@ -25,9 +23,7 @@ module Api
       end
 
       def update
-        if @screen.update(
-          name: screen_params[:screen][:name]
-        )
+        if @screen.update(screen_params[:screen])
           render json: @screen, each_serializer: ScreenSerializer, status: :ok
         else
           render json: { error: @screen.errors }, status: :unprocessable_entity
@@ -45,6 +41,7 @@ module Api
       private
 
       def screen_params
+        params.require(:screen)
         params.permit(:id, :event_id, screen: [:name])
       end
     end

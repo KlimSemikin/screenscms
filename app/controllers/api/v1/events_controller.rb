@@ -43,6 +43,7 @@ module Api
       private
 
       def event_params
+        params.require(:event)
         params.permit(:id, event: [:name])
       end
     end
