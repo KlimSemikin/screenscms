@@ -2,7 +2,7 @@ class CreatePlaylists < ActiveRecord::Migration[7.0]
   def change
     create_table :playlists do |t|
       t.references :screen, null: false, foreign_key: true
-      t.string :name
+      t.string :name, default: 'playlist'
 
       t.timestamps
     end

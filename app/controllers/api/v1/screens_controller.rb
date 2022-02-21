@@ -16,6 +16,7 @@ module Api
       def create
         @screen = @event.screens.new(screen_params[:screen])
         if @screen.save
+          @screen.create_playlist(name: "playlist")
           render json: @screen, each_serializer: ScreenSerializer, status: :ok
         else
           render json: { error: @screen.errors }, status: :unprocessable_entity
