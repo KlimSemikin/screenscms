@@ -4,12 +4,10 @@ module Api
       load_and_authorize_resource :except => [:create]
 
       def index
-        @events = Event.accessible_by(current_ability, :read)
         render json: @events, each_serializer: EventSerializer, status: :ok
       end
 
       def show
-        @event = Event.find(params[:id])
         render json: @event, each_serializer: EventSerializer, status: :ok
       end
 
@@ -25,7 +23,6 @@ module Api
       end
 
       def update
-        @event = Event.find(params[:id])
         if @event.update(
           name: event_params[:event][:name]
         )
@@ -36,7 +33,6 @@ module Api
       end
 
       def destroy
-        @event = Event.find(params[:id])
         if @event.destroy
           render json: @event, each_serializer: EventSerializer, status: :ok
         else
