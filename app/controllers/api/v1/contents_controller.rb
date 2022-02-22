@@ -37,7 +37,7 @@ module Api
         if @playlist.contents.delete(@content)
           render json: @content, each_serializer: ContentSerializer, status: :ok
         else
-          render json: { error: @content.errors }, status: :unprocessable_entity
+          render json: { error: @playlist.errors }, status: :unprocessable_entity
         end
       end
 
