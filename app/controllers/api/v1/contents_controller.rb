@@ -35,6 +35,7 @@ module Api
 
       def destroy
         if @playlist.contents.delete(@content)
+          @content.destroy unless @event.contents.exists?(@content.id)
           render json: @content, each_serializer: ContentSerializer, status: :ok
         else
           render json: { error: @playlist.errors }, status: :unprocessable_entity
