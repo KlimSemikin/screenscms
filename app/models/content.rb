@@ -4,4 +4,6 @@ class Content < ApplicationRecord
   validates :content, presence: true
 
   mount_uploader :content, ContentUploader
+
+  default_scope { order(created_at: :desc) }
 end
