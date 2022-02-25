@@ -45,6 +45,7 @@ module Api
       private
 
       def content_params
+        params.require(:content)
         params.permit(:content)
       end
     end
