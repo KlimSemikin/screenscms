@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        @content = @event.contents.find_by(content_params) || Content.create(content_params)
+        @content = @event.contents.find_by(content: content_params[:content].original_filename) || Content.create(content_params)
         if @content.valid?
           @playlist.contents << @content
           render json: @content, each_serializer: ContentSerializer, status: :ok
@@ -45,7 +45,7 @@ module Api
       private
 
       def content_params
-        params.require(:content).permit(:content)
+        params.permit(:content)
       end
     end
   end
