@@ -19,6 +19,8 @@ gem 'omniauth-auth0', '~> 3.0'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
 gem 'jwt'
 gem 'active_model_serializers'
+gem "carrierwave"
+gem "carrierwave-aws"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
