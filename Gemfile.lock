@@ -284,8 +284,5 @@ DEPENDENCIES
   rails (~> 7.0.1)
   tzinfo-data
 
-RUBY VERSION
-   ruby 3.1.0p0
-
 BUNDLED WITH
    2.3.6
