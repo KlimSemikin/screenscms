@@ -6,12 +6,12 @@ module Api
       load_and_authorize_resource through: :screen, singleton: true
 
       def show
-        render json: @playlist, each_serializer: PlaylistSerializer, status: :ok
+        render json: @playlist, each_serializer: PlaylistSerializer, status: :ok, root: :data
       end
 
       def update
         if @playlist.update(playlist_params)
-          render json: @playlist, each_serializer: PlaylistSerializer, status: :ok
+          render json: @playlist, each_serializer: PlaylistSerializer, status: :ok, root: :data
         else
           render json: { error: @playlist.errors }, status: :unprocessable_entity
         end
@@ -20,7 +20,7 @@ module Api
       def destroy
         if @playlist.destroy
           @screen.create_playlist
-          render json: @playlist, each_serializer: PlaylistSerializer, status: :ok
+          render json: @playlist, each_serializer: PlaylistSerializer, status: :ok, root: :data
         else
           render json: { error: @playlist.errors }, status: :unprocessable_entity
         end

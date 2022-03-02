@@ -4,16 +4,16 @@ module Api
       load_and_authorize_resource
 
       def index
-        render json: @events, each_serializer: EventSerializer, status: :ok
+        render json: @events, each_serializer: EventSerializer, status: :ok, root: :data
       end
 
       def show
-        render json: @event, each_serializer: EventSerializer, status: :ok
+        render json: @event, each_serializer: EventSerializer, status: :ok, root: :data
       end
 
       def create
         if @event.save
-          render json: @event, each_serializer: EventSerializer, status: :ok
+          render json: @event, each_serializer: EventSerializer, status: :ok, root: :data
         else
           render json: { error: @event.errors }, status: :unprocessable_entity
         end
@@ -21,7 +21,7 @@ module Api
 
       def update
         if @event.update(event_params)
-          render json: @event, each_serializer: EventSerializer, status: :ok
+          render json: @event, each_serializer: EventSerializer, status: :ok, root: :data
         else
           render json: { error: @event.errors }, status: :unprocessable_entity
         end
@@ -29,7 +29,7 @@ module Api
 
       def destroy
         if @event.destroy
-          render json: @event, each_serializer: EventSerializer, status: :ok
+          render json: @event, each_serializer: EventSerializer, status: :ok, root: :data
         else
           render json: { error: @event.errors }, status: :unprocessable_entity
         end

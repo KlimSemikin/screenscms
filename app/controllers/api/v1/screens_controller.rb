@@ -6,17 +6,17 @@ module Api
 
       def index
         @screens = @event.screens
-        render json: @screens, each_serializer: ScreenSerializer, status: :ok
+        render json: @screens, each_serializer: ScreenSerializer, status: :ok, root: :data
       end
 
       def show
-        render json: @screen, each_serializer: ScreenSerializer, status: :ok
+        render json: @screen, each_serializer: ScreenSerializer, status: :ok, root: :data
       end
 
       def create
         if @screen.save
           @screen.create_playlist
-          render json: @screen, each_serializer: ScreenSerializer, status: :ok
+          render json: @screen, each_serializer: ScreenSerializer, status: :ok, root: :data
         else
           render json: { error: @screen.errors }, status: :unprocessable_entity
         end
@@ -24,7 +24,7 @@ module Api
 
       def update
         if @screen.update(screen_params)
-          render json: @screen, each_serializer: ScreenSerializer, status: :ok
+          render json: @screen, each_serializer: ScreenSerializer, status: :ok, root: :data
         else
           render json: { error: @screen.errors }, status: :unprocessable_entity
         end
@@ -32,7 +32,7 @@ module Api
 
       def destroy
         if @screen.destroy
-          render json: @screen, each_serializer: ScreenSerializer, status: :ok
+          render json: @screen, each_serializer: ScreenSerializer, status: :ok, root: :data
         else
           render json: { error: @screen.errors }, status: :unprocessable_entity
         end
