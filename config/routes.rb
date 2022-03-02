@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :events do
         resources :screens do
-          resource :playlist do
+          resource :playlist, except: [:index, :create] do
             resources :contents
           end
         end
