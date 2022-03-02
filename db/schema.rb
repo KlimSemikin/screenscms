@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_17_154747) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_28_152321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,19 +20,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_17_154747) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contents_playlists", id: false, force: :cascade do |t|
-    t.bigint "playlist_id"
-    t.bigint "content_id"
-    t.index ["content_id"], name: "index_contents_playlists_on_content_id"
-    t.index ["playlist_id"], name: "index_contents_playlists_on_playlist_id"
-  end
-
   create_table "events", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "playlist_contents", force: :cascade do |t|
+    t.bigint "playlist_id", null: false
+    t.bigint "content_id", null: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_playlist_contents_on_content_id"
+    t.index ["playlist_id"], name: "index_playlist_contents_on_playlist_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -62,6 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_17_154747) do
   end
 
   add_foreign_key "events", "users"
+  add_foreign_key "playlist_contents", "contents"
+  add_foreign_key "playlist_contents", "playlists"
   add_foreign_key "playlists", "screens"
   add_foreign_key "screens", "events"
 end
