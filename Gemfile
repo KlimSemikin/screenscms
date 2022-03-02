@@ -19,6 +19,7 @@ gem 'jwt'
 gem 'active_model_serializers'
 gem "carrierwave"
 gem "carrierwave-aws"
+gem "acts_as_list"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
