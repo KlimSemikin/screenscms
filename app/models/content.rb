@@ -1,9 +1,8 @@
 class Content < ApplicationRecord
-  has_and_belongs_to_many :playlists
+  has_many :playlist_contents, dependent: :destroy
+  has_many :playlists, -> { order('playlist_contents.position ASC') }, through: :playlist_contents
 
   validates :content, presence: true
 
   mount_uploader :content, ContentUploader
-
-  default_scope { order(created_at: :desc) }
 end
